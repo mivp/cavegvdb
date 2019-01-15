@@ -60,7 +60,8 @@ void GvdbApp::init(int w, int h) {
 
 	// Initialize GVDB	
 	gvdb.SetVerbose ( true );
-	gvdb.SetCudaDevice ( GVDB_DEV_FIRST );
+	//gvdb.SetCudaDevice ( GVDB_DEV_FIRST );
+	gvdb.SetCudaDevice(-1);
 	gvdb.Initialize ();
 	gvdb.AddPath ( "./data/" );
 	gvdb.AddPath ( "./" );
@@ -129,13 +130,15 @@ void GvdbApp::display(const float V[16], const float P[16], const float campos[3
 
 	Camera3D* cam = gvdb.getScene()->getCamera();
 	Vector3DF pos;
+	//pos.Set(campos[0], campos[1], campos[2]);
 	pos.Set(0, 0, 0);
 	cam->setMatrices(V, P, pos);
+	
 	/*
 	if(m_framecount % 60 == 0)  {
 		//printf("%0.4f, %0.4f, %0.4f\n", cam->from_pos.x, cam->from_pos.y, cam->from_pos.z);
-		printMatrix("V", V);
-		printMatrix("P", P);
+		//printMatrix("V", V);
+		//printMatrix("P", P);
 		printf("campos: %0.2f %0.2f %0.2f\n", campos[0], campos[1], campos[2]);
 		cam->view_matrix.Print();
 		cam->proj_matrix.Print();

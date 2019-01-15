@@ -67,11 +67,32 @@ public:
 	
     	    if(module->initalized && module->visible)
     	    { 
+		        Camera* cam = context.camera;
+
                 Vector3f cp = context.camera->getPosition();
                 float campos[3] = {cp[0], cp[1], cp[2]};
-                float* MV = context.modelview.cast<float>().data();
-                float* P = context.projection.cast<float>().data();
-                module->app->display(MV, P, campos);
+                float MV[16], P[16];
+                for (int i=0; i < 4; i++) {
+                    for(int j=0; j < 4; j++) {
+                        MV[i*4+j] = context.modelview(j, i);
+                        P[i*4+j] = context.projection(j, i);
+                    }
+                }
+                //float* MV = context.modelview.cast<float>().data();
+                //float* P = context.projection.cast<float>().data();
+                /*
+                DrawContext tmp = context;
+		        tmp.eye = DrawContext::EyeCyclop;
+                tmp.updateTransforms(cam->getHeadTransform(), cam->getViewTransform(), 
+                            cam->getEyeSeparation(), cam->getNearZ(), cam->getFarZ());
+                float* MV = tmp.modelview.cast<float>().data();
+                float* P = tmp.projection.cast<float>().data();
+                for(int i=0; i < 4; i++)
+                    for(int j=0; j < 4; j++) {
+                        std::cout << tmp.modelview(i, j) << " " << tmp.projection(i, j) << " " << std::endl;
+                    }
+                */
+		        module->app->display(MV, P, campos);
 
                 if(oglError) return;
     	    }

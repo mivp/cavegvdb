@@ -22,4 +22,4 @@ mm.setMainMenu(menu)
 #		'cam.setOrientation(Quaternion(' + str(camori[0]) + ',' + str(camori[1]) + ',' + str(camori[2]) + ',' + str(camori[3]) + '))'
 menu.addButton("Go to camera 1", 'cam.setPosition(0, 0, 700)')
 
-#cam.setPostion(Vector3(0, 0, 700))
+cam.setPostion(0, 0, 700)
